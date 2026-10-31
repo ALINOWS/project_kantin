@@ -7,6 +7,41 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## KantinMuh
+
+Aplikasi kantin dengan katalog menu, akun siswa/penjual/admin, keranjang, pemesanan, pembayaran QRIS statis, validasi pengambilan, ulasan, dan laporan.
+
+### Menyiapkan aplikasi
+
+1. Pasang dependensi PHP dan salin `.env.example` menjadi `.env`.
+2. Atur kredensial database di `.env`, lalu buat `APP_KEY` dengan `php artisan key:generate`.
+3. Pasang aset dan dependensi QR menu:
+
+   ```sh
+   npm ci
+   npm run build
+   ```
+
+4. Cadangkan database sebelum migrasi. Untuk database KantinMuh yang sudah berisi data, jalankan migrasi tambahan dengan `php artisan migrate`; jangan gunakan `migrate:fresh` atau `migrate:refresh`.
+5. Publikasikan file foto dan QRIS dengan `php artisan storage:link`.
+6. Buat admin pertama secara interaktif; perintah akan meminta nama dan kata sandi tanpa menyimpan kredensial bawaan:
+
+   ```sh
+   php artisan kantin:create-admin-user admin@contoh.sch.id
+   ```
+
+7. Admin menyetujui akun penjual. Penjual kemudian mengatur profil kantin dan mengunggah QRIS di halaman Pengaturan.
+
+Jalankan server lokal dengan `php artisan serve`. Agar pesanan yang belum dibayar kedaluwarsa otomatis, jalankan `php artisan schedule:work` selama aplikasi beroperasi atau jadwalkan `php artisan schedule:run` setiap menit melalui Task Scheduler/cron.
+
+**Pembayaran QRIS bersifat manual:** aplikasi menampilkan QRIS kantin dan nominal berkode unik. Klaim dari siswa bukan bukti pembayaran; penjual harus mencocokkan mutasi dan nominal sebelum memproses pesanan. Aplikasi ini tidak terhubung ke payment gateway.
+
+### Pengujian
+
+```sh
+php artisan test
+```
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
