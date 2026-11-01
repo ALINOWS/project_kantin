@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Masuk Pengelola')
+@section('title', 'Masuk')
 
 @section('content')
     <section class="auth-panel">
-        <p class="eyebrow">Area pengelola</p>
-        <h1>Masuk ke akun kantin</h1>
-        <p class="form-intro">Gunakan akun pengelola yang sudah terdaftar untuk mengatur menu.</p>
+        <p class="eyebrow">Selamat datang kembali</p>
+        <h1>Masuk ke akun KantinMuh</h1>
+        <p class="form-intro">Masuk sebagai siswa, penjual, atau admin menggunakan email dan kata sandi Anda.</p>
 
         <form action="{{ route('login.store') }}" method="POST" class="form-stack">
             @csrf

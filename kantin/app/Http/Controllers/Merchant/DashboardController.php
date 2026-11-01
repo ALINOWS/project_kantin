@@ -27,6 +27,10 @@ class DashboardController extends Controller
     public function reports(Request $request): View
     {
         $merchantId = $request->user()->merchantProfile->id;
+        $request->validate([
+            'start' => ['nullable', 'date_format:Y-m-d'],
+            'end' => ['nullable', 'date_format:Y-m-d'],
+        ]);
         $start = $request->date('start') ?? today()->startOfMonth();
         $end = $request->date('end') ?? today();
         abort_if($start->greaterThan($end), 422, 'Tanggal mulai harus sebelum tanggal akhir.');

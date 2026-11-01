@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MerchantProfile;
 use App\Models\Order;
 use App\Models\User;
 use App\Services\AuditLogService;
@@ -47,7 +48,15 @@ class CheckoutController extends Controller
                 }
             }
 
-            $merchant = $items->first()->product->merchantProfile;
+            $merchant = MerchantProfile::query()
+                ->lockForUpdate()
+                ->findOrFail($items->first()->product->merchant_id);
+            if ($merchant->status !== 'active') {
+                throw ValidationException::withMessages([
+                    'cart' => 'Kantin sedang tidak aktif. Perbarui keranjang Anda.',
+                ]);
+            }
+
             if ($merchant->qris_image === null) {
                 throw ValidationException::withMessages([
                     'cart' => 'Kantin belum mengunggah QRIS sehingga pesanan belum dapat dibayar.',
@@ -58,6 +67,13 @@ class CheckoutController extends Controller
                 fn ($item): int => (int) round((float) $item->product->price * 100) * $item->quantity
             );
             $uniqueCode = $this->availableUniqueCode($merchant->id);
+            $totalCents = $subtotalCents + $uniqueCode * 100;
+            if ($totalCents > 999_999_999_999) {
+                throw ValidationException::withMessages([
+                    'cart' => 'Total pesanan melebihi batas transaksi yang dapat diproses.',
+                ]);
+            }
+
             $now = now();
             $order = Order::query()->create([
                 'order_number' => $this->orderNumber(),
@@ -65,7 +81,7 @@ class CheckoutController extends Controller
                 'merchant_id' => $merchant->id,
                 'subtotal' => $subtotalCents / 100,
                 'unique_code' => $uniqueCode,
-                'total' => ($subtotalCents + $uniqueCode * 100) / 100,
+                'total' => $totalCents / 100,
                 'order_status' => 'pending_payment',
                 'payment_status' => 'pending',
                 'expires_at' => $now->copy()->addMinutes(15),

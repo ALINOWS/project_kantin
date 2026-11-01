@@ -25,6 +25,10 @@ class DashboardController extends Controller
 
     public function reports(Request $request): View
     {
+        $request->validate([
+            'start' => ['nullable', 'date_format:Y-m-d'],
+            'end' => ['nullable', 'date_format:Y-m-d'],
+        ]);
         $start = $request->date('start') ?? today()->startOfMonth();
         $end = $request->date('end') ?? today();
         abort_if($start->greaterThan($end), 422, 'Tanggal mulai harus sebelum tanggal akhir.');
@@ -33,7 +37,7 @@ class DashboardController extends Controller
             'start' => $start,
             'end' => $end,
             'orders' => Order::query()
-                ->with('merchantProfile')
+                ->with(['merchantProfile', 'user'])
                 ->whereBetween('created_at', [$start->startOfDay(), $end->endOfDay()])
                 ->latest()
                 ->paginate(25)

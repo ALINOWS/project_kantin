@@ -21,7 +21,7 @@ Route::get('/', [MenuController::class, 'index'])->name('menu.index');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [SessionController::class, 'create'])->name('login');
-    Route::post('/login', [SessionController::class, 'store'])->name('login.store');
+    Route::post('/login', [SessionController::class, 'store'])->middleware('throttle:6,1')->name('login.store');
     Route::get('/register', [RegistrationController::class, 'createStudent'])->name('register');
     Route::post('/register', [RegistrationController::class, 'storeStudent'])->name('register.store');
     Route::get('/register-merchant', [RegistrationController::class, 'createMerchant'])->name('register.merchant');

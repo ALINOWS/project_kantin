@@ -43,7 +43,9 @@ return new class extends Migration
                 }
             });
 
-            if (Schema::hasColumn('orders', 'merchant_id') && Schema::hasColumn('orders', 'unique_code')) {
+            if (Schema::hasColumn('orders', 'merchant_id')
+                && Schema::hasColumn('orders', 'unique_code')
+                && ! Schema::hasIndex('orders', ['merchant_id', 'unique_code', 'payment_status'])) {
                 Schema::table('orders', function (Blueprint $table): void {
                     $table->unique(['merchant_id', 'unique_code', 'payment_status'], 'uq_merchant_unique_payment_code');
                 });

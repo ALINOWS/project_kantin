@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Services\AuditLogService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,10 +27,11 @@ class CategoryController extends Controller
         return view('manage.categories.create', ['category' => new Category]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, AuditLogService $auditLog): RedirectResponse
     {
         $this->authorizeAdmin($request);
-        Category::query()->create($this->validatedData($request));
+        $category = Category::query()->create($this->validatedData($request));
+        $auditLog->record($request, 'category.created', 'category', $category->id);
 
         return to_route('manage.categories.index')->with('status', 'Kategori berhasil ditambahkan.');
     }
@@ -41,15 +43,16 @@ class CategoryController extends Controller
         return view('manage.categories.edit', compact('category'));
     }
 
-    public function update(Request $request, Category $category): RedirectResponse
+    public function update(Request $request, Category $category, AuditLogService $auditLog): RedirectResponse
     {
         $this->authorizeAdmin($request);
         $category->update($this->validatedData($request, $category));
+        $auditLog->record($request, 'category.updated', 'category', $category->id);
 
         return to_route('manage.categories.index')->with('status', 'Kategori berhasil diperbarui.');
     }
 
-    public function destroy(Request $request, Category $category): RedirectResponse
+    public function destroy(Request $request, Category $category, AuditLogService $auditLog): RedirectResponse
     {
         $this->authorizeAdmin($request);
 
@@ -58,6 +61,7 @@ class CategoryController extends Controller
         }
 
         $category->delete();
+        $auditLog->record($request, 'category.deleted', 'category', $category->id);
 
         return to_route('manage.categories.index')->with('status', 'Kategori berhasil dihapus.');
     }

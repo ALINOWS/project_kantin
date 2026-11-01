@@ -54,7 +54,7 @@
                         </form>
                     @else
                         <a href="{{ route('register') }}">Daftar siswa</a>
-                        <a class="nav-login" href="{{ route('login') }}">Masuk pengelola</a>
+                        <a class="nav-login" href="{{ route('login') }}">Masuk</a>
                     @endauth
                 </nav>
             </div>

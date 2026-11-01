@@ -14,14 +14,18 @@ class NotificationController extends Controller
         $notification->update(['read_at' => now()]);
 
         $orderId = $notification->data['order_id'] ?? null;
-        if ($orderId !== null && $request->user()->role === 'student') {
-            return to_route('orders.show', $orderId);
+        if ($request->user()->role === 'student') {
+            return $orderId !== null
+                ? to_route('orders.show', $orderId)
+                : to_route('orders.index');
         }
 
         if ($request->user()->role === 'merchant') {
             return to_route('merchant.orders.index');
         }
 
-        return to_route('admin.dashboard');
+        return $request->user()->role === 'admin'
+            ? to_route('admin.dashboard')
+            : to_route('menu.index');
     }
 }

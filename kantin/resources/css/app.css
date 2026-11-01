@@ -587,6 +587,79 @@ tr:last-child td {
     background: #f8f0dc;
 }
 
+.status-pending_payment,
+.status-pending {
+    color: #8a6c38;
+    background: #f8f0dc;
+}
+
+.status-awaiting_merchant {
+    color: #8a5424;
+    background: #fff0dc;
+}
+
+.status-processing {
+    color: #315d8a;
+    background: #e9f1fb;
+}
+
+.status-ready_for_pickup {
+    color: #416d3d;
+    background: #e9f4e5;
+}
+
+.status-completed,
+.status-paid {
+    color: #2a7045;
+    background: #e7f4e8;
+}
+
+.status-cancelled,
+.status-expired,
+.status-failed {
+    color: #8a3430;
+    background: #fff0ee;
+}
+
+.order-history-list {
+    display: grid;
+    gap: 14px;
+}
+
+.order-history-card {
+    display: block;
+    width: 100%;
+    padding: 22px 24px;
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.order-history-card:hover {
+    border-color: #cbd9ce;
+    box-shadow: 0 12px 30px rgb(35 51 45 / 7%);
+    transform: translateY(-2px);
+}
+
+.order-history-card .order-heading {
+    margin-bottom: 14px;
+}
+
+.order-history-card h2 {
+    margin-bottom: 0;
+    font-size: 1.05rem;
+}
+
+.order-history-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--ink-muted);
+    font-size: .88rem;
+}
+
+.order-history-meta strong {
+    color: var(--green-dark);
+}
+
 .table-empty {
     padding-block: 34px;
     color: var(--ink-muted);
@@ -803,5 +876,15 @@ tr:last-child td {
 
     .form-row {
         grid-template-columns: 1fr;
+    }
+
+    .order-history-card {
+        padding: 18px 16px;
+    }
+
+    .order-history-card .order-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
     }
 }

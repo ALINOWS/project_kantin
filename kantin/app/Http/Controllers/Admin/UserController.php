@@ -14,13 +14,18 @@ class UserController extends Controller
 {
     public function index(Request $request): View
     {
+        $filters = $request->validate([
+            'search' => ['nullable', 'string', 'max:100'],
+            'role' => ['nullable', 'in:student,merchant,admin'],
+        ]);
+
         return view('admin.users.index', [
             'users' => User::query()->with('merchantProfile')
-                ->when($request->string('search')->trim()->value(), function ($query, string $search): void {
+                ->when(trim($filters['search'] ?? ''), function ($query, string $search): void {
                     $query->where(fn ($query) => $query->where('name', 'like', "%{$search}%")
                         ->orWhere('email', 'like', "%{$search}%"));
                 })
-                ->when($request->string('role')->value(), fn ($query, string $role) => $query->where('role', $role))
+                ->when($filters['role'] ?? null, fn ($query, string $role) => $query->where('role', $role))
                 ->latest()
                 ->paginate(25)
                 ->withQueryString(),
