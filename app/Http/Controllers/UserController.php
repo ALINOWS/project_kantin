@@ -7,13 +7,28 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index(): void {}
+    public function index(): string
+    {
+        return $this->pageText('Users');
+    }
 
-    public function store(Request $request): void {}
+    public function store(Request $request): string
+    {
+        return $this->pageText('Users');
+    }
 
-    public function show(User $user): void {}
+    public function show(User $user): string
+    {
+        return $this->pageText('Users');
+    }
 
-    public function update(Request $request, User $user): void {}
+    public function update(Request $request, User $user): string
+    {
+        return $this->pageText('Users');
+    }
 
-    public function destroy(User $user): void {}
+    public function destroy(User $user): string
+    {
+        return $this->pageText('Users');
+    }
 }

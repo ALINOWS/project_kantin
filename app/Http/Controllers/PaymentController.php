@@ -7,11 +7,23 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function index(): void {}
+    public function index(): string
+    {
+        return $this->pageText('Payments');
+    }
 
-    public function show(Payment $payment): void {}
+    public function show(Payment $payment): string
+    {
+        return $this->pageText('Payments');
+    }
 
-    public function claimPaid(Request $request, Payment $payment): void {}
+    public function claimPaid(Request $request, Payment $payment): string
+    {
+        return $this->pageText('Payments');
+    }
 
-    public function verify(Request $request, Payment $payment): void {}
+    public function verify(Request $request, Payment $payment): string
+    {
+        return $this->pageText('Payments');
+    }
 }

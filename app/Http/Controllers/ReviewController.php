@@ -7,9 +7,18 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    public function index(): void {}
+    public function index(): string
+    {
+        return $this->pageText('Reviews');
+    }
 
-    public function store(Request $request): void {}
+    public function store(Request $request): string
+    {
+        return $this->pageText('Reviews');
+    }
 
-    public function destroy(Review $review): void {}
+    public function destroy(Review $review): string
+    {
+        return $this->pageText('Reviews');
+    }
 }

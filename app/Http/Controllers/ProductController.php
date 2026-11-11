@@ -7,15 +7,33 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index(): void {}
+    public function index(): string
+    {
+        return $this->pageText('Products');
+    }
 
-    public function store(Request $request): void {}
+    public function store(Request $request): string
+    {
+        return $this->pageText('Products');
+    }
 
-    public function show(Product $product): void {}
+    public function show(Product $product): string
+    {
+        return $this->pageText('Products');
+    }
 
-    public function update(Request $request, Product $product): void {}
+    public function update(Request $request, Product $product): string
+    {
+        return $this->pageText('Products');
+    }
 
-    public function destroy(Product $product): void {}
+    public function destroy(Product $product): string
+    {
+        return $this->pageText('Products');
+    }
 
-    public function availability(Request $request, Product $product): void {}
+    public function availability(Request $request, Product $product): string
+    {
+        return $this->pageText('Products');
+    }
 }

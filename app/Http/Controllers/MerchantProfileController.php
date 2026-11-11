@@ -7,13 +7,28 @@ use Illuminate\Http\Request;
 
 class MerchantProfileController extends Controller
 {
-    public function index(): void {}
+    public function index(): string
+    {
+        return $this->pageText('Merchant Profiles');
+    }
 
-    public function store(Request $request): void {}
+    public function store(Request $request): string
+    {
+        return $this->pageText('Merchant Profiles');
+    }
 
-    public function show(MerchantProfile $merchantProfile): void {}
+    public function show(MerchantProfile $merchantProfile): string
+    {
+        return $this->pageText('Merchant Profiles');
+    }
 
-    public function update(Request $request, MerchantProfile $merchantProfile): void {}
+    public function update(Request $request, MerchantProfile $merchantProfile): string
+    {
+        return $this->pageText('Merchant Profiles');
+    }
 
-    public function destroy(MerchantProfile $merchantProfile): void {}
+    public function destroy(MerchantProfile $merchantProfile): string
+    {
+        return $this->pageText('Merchant Profiles');
+    }
 }

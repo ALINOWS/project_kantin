@@ -7,7 +7,13 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    public function index(Request $request): void {}
+    public function index(Request $request): string
+    {
+        return $this->pageText('Notifications');
+    }
 
-    public function markRead(Request $request, Notification $notification): void {}
+    public function markRead(Request $request, Notification $notification): string
+    {
+        return $this->pageText('Notifications');
+    }
 }
